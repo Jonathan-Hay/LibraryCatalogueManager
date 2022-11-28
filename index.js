@@ -21,6 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 //For extracting json data from some requests
 app.use(express.json());
 app.use(express.static('public')); // Serve static files (e.g. CSS files)
+app.use("/products/assets", express.static("product-data"));
+
 
 //use the routes defined in routes.js
 app.use(baseRoutes);

@@ -10,6 +10,7 @@ class Product {
     //We want to store product data as an integer, not string. The + converts it.
     this.description = productData.description;
     this.image = productData.image; // the name of the image file
+    this.updateImageData();
     //When a product is first created it isn't neccessarily in the database so might not have an id (i think)
     if (productData._id) {
       this.id = productData._id.toString();
@@ -92,7 +93,19 @@ class Product {
       return products.map(function (productDocument) {
         return new Product(productDocument);
       });
-    }
+  }
+  
+  replaceImage(newImage) {
+    this.image = newImage;
+    this.updateImageData();
+  }
+
+  updateImageData() {
+    //local path on server
+    this.imagePath = `product-data/images/${this.image}`;
+    //When you right click and open image in new tab 
+    this.imageUrl = `/products/assets/images/${this.image}`;    
+  }
 }
 
 module.exports = Product;

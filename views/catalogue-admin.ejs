@@ -16,29 +16,13 @@
 
         <section>
           <ul id="products-grid">
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
+              <% for (const product of products) { %>
+                <li>
+                  <%- include('includes/product-item', { product: product }) %>
+                </li>
+              <% } %>
           </ul>
-        </section>
+      </section>
 
 
       </main>
