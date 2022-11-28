@@ -55,6 +55,44 @@ class Product {
     const productId = new mongodb.ObjectId(this.id);
     return db.getDb().collection("products").deleteOne({ _id: productId });
   }
+
+    //Find any product with this id if it exists
+    static async findById(productId) {
+      let prodId;
+      try {
+        //try create the mongodb docuent id. This may not exist ans so fail
+        prodId = new mongodb.ObjectId(productId);
+      } catch (error) {
+        error.code = 404;
+        throw error;
+      }
+  
+      // At this point it must exist so retreive the product document
+      const product = await db
+        .getDb()
+        .collection("products")
+        .findOne({ _id: prodId });
+  
+      if (!product) {
+        const error = new Error("Could not find product with provided id.");
+        error.code = 404;
+        throw error;
+      }
+      //create the product object from the document and return it
+      return new Product(product);
+    }
+  
+    // Find all the prducts in the db
+    static async findAll() {
+      const products = await db.getDb().collection("products").find().toArray();
+      //we want to return an array of the product objects, but right now we have an array of the DOCUMENTS.
+      //the map function for arrays can deal with this. We just give it a function telling it out to treat each element
+      //of the array, i.e create a product object for it.
+  
+      return products.map(function (productDocument) {
+        return new Product(productDocument);
+      });
+    }
 }
 
 module.exports = Product;

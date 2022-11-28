@@ -5,43 +5,16 @@
   <body>
     <%- include('./includes/header') %>
 
-      <main>
-        <h1>Product Administration</h1>
-        <section>
-          <h2>Manage Products</h2>
-          <p>
-            <a href="/admin/products/new" class="btn">Add Product</a>
-          </p>
-        </section>
-
-        <section>
-          <ul id="products-grid">
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-            <li>
-              <p>Book X</p>
-            </li>
-          </ul>
-        </section>
-
-
-      </main>
+    <main>
+      <h1>All Products</h1>
+      <ul id="products-grid">
+        <% for (const product of products) { %>
+          <li>
+            <%- include('includes/product-item', { product: product }) %>
+          </li>
+        <% } %>
+      </ul>
+    </main>
 
   </body>
 
