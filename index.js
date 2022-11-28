@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 
+const authRoutes = require("./routes/auth.routes");
 const baseRoutes = require('./routes/base-routes');
 const adminRoutes = require("./routes/admin-routes");
 
@@ -26,6 +27,8 @@ app.use("/products/assets", express.static("product-data"));
 
 //use the routes defined in routes.js
 app.use(baseRoutes);
+app.use(authRoutes);
+
 app.use("/admin", adminRoutes);
 
 
