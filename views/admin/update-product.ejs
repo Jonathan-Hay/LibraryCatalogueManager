@@ -14,7 +14,7 @@
             Instead we need to use the alternative, which is adding ?_csrf=< %= locals.csrfToken % >
             as a query parameter to the path. -->
 
-        <form action="/admin/products/" + product.id method="POST" enctype="multipart/form-data">
+        <form action="/admin/products/<%= product.id %>" method="POST" enctype="multipart/form-data">
           <p>
             <label for="title">Title</label>
             <input type="text" id="title" name="title" value="<%= product.title %>" required>
