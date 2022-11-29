@@ -2,6 +2,13 @@ const path = require('path');
 
 const express = require('express');
 
+
+const expressSession = require("express-session");
+const createSessionConfig = require("./config/session");
+
+
+const checkAuthStatusMiddleware = require("./middlewares/check-auth");
+
 const authRoutes = require("./routes/auth.routes");
 const baseRoutes = require('./routes/base-routes');
 const adminRoutes = require("./routes/admin-routes");
@@ -21,8 +28,17 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: false }));
 //For extracting json data from some requests
 app.use(express.json());
+
+//add ability to use sessions:
+const sessionConfig = createSessionConfig();
+app.use(expressSession(sessionConfig));
+
+
 app.use(express.static('public')); // Serve static files (e.g. CSS files)
 app.use("/products/assets", express.static("product-data"));
+
+//Check each request to see if the user is authenticated and if so save their data to the session.
+app.use(checkAuthStatusMiddleware);
 
 
 //use the routes defined in routes.js
@@ -41,6 +57,8 @@ app.use("/admin", adminRoutes);
 // });
 
 //connect to our database, THEN start listing (i.e launch app if successful)
+
+
 db.connectToDatabase().then(function () {
   app.listen(3000);
 });

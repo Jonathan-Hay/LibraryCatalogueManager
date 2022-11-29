@@ -1,37 +1,33 @@
 const User = require("../models/user.model");
-// const authUtil = require("../util/authentication");
+const authUtil = require("../util/authentication");
 const validation = require("../util/validation");
-// const sessionFlash = require("../util/session-flash");
+const sessionFlash = require("../util/session-flash");
 
 function getSignup(req, res) {
   //get the session data, if any exist. (i.e some already entered inputs, but its invalid.
   //We dont want this info to dsisapear and user need to enter it again after the redirect)
-  
-  // let sessionData = sessionFlash.getSessionData(req);
+
+  let sessionData = sessionFlash.getSessionData(req);
 
   //if no session data, set the session data to defaults (i,e first time entering the data)
-  // if (!sessionData) {
-  //   sessionData = {
-  //     email: '',
-  //     confirmEmail: '',
-  //     password: '',
-  //     fullname: '',
-  //     street: '',
-  //     postal: '',
-  //     city: '',
-  //   };
-  // }
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      confirmEmail: "",
+      password: "",
+      fullname: "",
+      street: "",
+      postal: "",
+      city: "",
+    };
+  }
   //In app.js we said the templating engine would use the views folder but we need to specify the path inside the views
   //folder since we have multiple folders INSIDE views
   //We give it the sessionData to display, if it exists
 
-  let sessionData = "delete this later, jsut for testing"
-
-
-  res.render("auth/signup", {inputData: sessionData});
+  res.render("auth/signup", { inputData: sessionData });
 
   // res.render("auth/signup");
-
 }
 
 async function signup(req, res, next) {
@@ -40,7 +36,7 @@ async function signup(req, res, next) {
 
   const enteredData = {
     email: req.body.email,
-    confirmEmail: req.body['confirm-email'],
+    confirmEmail: req.body["confirm-email"],
     password: req.body.password,
     fullname: req.body.fullname,
   };
@@ -49,7 +45,7 @@ async function signup(req, res, next) {
     !validation.userDetailsAreValid(
       req.body.email,
       req.body.password,
-      req.body.fullname,
+      req.body.fullname
     ) ||
     !validation.emailIsConfirmed(req.body.email, req.body["confirm-email"])
     //confirm-email has a - in it so need to use square notiation
@@ -69,11 +65,7 @@ async function signup(req, res, next) {
   }
 
   //input is validated at this point, now try to create a user
-  const user = new User(
-    req.body.email,
-    req.body.password,
-    req.body.fullname,
-  );
+  const user = new User(req.body.email, req.body.password, req.body.fullname);
 
   //express ignores errors that occur inside async operations,
   //so our error handling middleware does not kick in.We need to deal with this oursleves
@@ -81,12 +73,16 @@ async function signup(req, res, next) {
     const existsAlready = await user.existsAlready();
 
     if (existsAlready) {
-      sessionFlash.flashDataToSession(req, {
-        errorMessage: "User exists already",
-        ...enteredData,
-      }, function () {
-        res.redirect("signup");
-      })
+      sessionFlash.flashDataToSession(
+        req,
+        {
+          errorMessage: "User exists already",
+          ...enteredData,
+        },
+        function () {
+          res.redirect("signup");
+        }
+      );
       return;
     }
 
@@ -102,18 +98,17 @@ async function signup(req, res, next) {
 }
 
 function getLogin(req, res) {
-  //let sessionData = sessionFlash.getSessionData(req);
+  let sessionData = sessionFlash.getSessionData(req);
 
-  //if no session data, set the session data to defaults (i,e first time entering the data)
-  // if (!sessionData) {
-  //   sessionData = {
-  //     email: '',
-  //     password: '',
-  //   };
-  // }
-  let sessionData = "delete this later, jsut for testing"
+  // if no session data, set the session data to defaults (i,e first time entering the data)
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      password: "",
+    };
+  }
 
-  res.render("auth/login", {inputData: sessionData});
+  res.render("auth/login", { inputData: sessionData });
 }
 
 async function login(req, res, next) {
@@ -133,13 +128,13 @@ async function login(req, res, next) {
   const sessionErrorData = {
     errorMessage: "Invalid credentials check email and password",
     email: user.email,
-    password: user.password
+    password: user.password,
   };
 
   if (!existingUser) {
     sessionFlash.flashDataToSession(req, sessionErrorData, function () {
       res.redirect("/login");
-    })
+    });
     return;
   }
 
@@ -152,13 +147,15 @@ async function login(req, res, next) {
   if (!passwordIsCorrect) {
     sessionFlash.flashDataToSession(req, sessionErrorData, function () {
       res.redirect("/login");
-    })
+    });
     return;
   }
 
   //if we get to this point we know the email is correct and the password is correct
   //Therefore we want to "log them in" i.e, store info on the session to say this user can access certain
   //data
+
+  console.log("logged in");
 
   authUtil.createUserSession(req, existingUser, function () {
     res.redirect("/");
