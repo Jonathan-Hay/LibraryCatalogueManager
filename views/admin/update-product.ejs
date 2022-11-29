@@ -1,0 +1,52 @@
+<%- include('../includes/head', { pageTitle: 'Update product' }) %>
+  <link rel="stylesheet" href="/styles/forms.css">
+  <script src="/scripts/image-preview.js" defer></script>
+  </head>
+
+  <body>
+    <%- include('../includes/header') %>
+      <main>
+        <h1>Update Product</h1>
+        <!-- An image is NOT requirede because we are updating -->
+        <!-- The user can provide an updated image, but since one already exists it isnt neccessary -->
+        <!-- multipart/form-data needed for images -->
+        <!-- When using multipart-form-data, we CANT use input for CSRF. 
+            Instead we need to use the alternative, which is adding ?_csrf=< %= locals.csrfToken % >
+            as a query parameter to the path. -->
+
+        <form action="/admin/products/" + product.id method="POST" enctype="multipart/form-data">
+          <p>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" value="<%= product.title %>" required>
+          </p>
+
+          <div id="image-upload-control">
+            <p>
+              <label for="image">Image</label>
+              <!-- The image only needs required field if we are creating a new product, not updating -->
+              <input type="file" id="image" name="image" accept="image/png,image/jpg">
+            </p>
+
+            <img src="" alt="Selected image.">
+          </div>
+
+
+          <p>
+            <label for="summary">Summary</label>
+            <input type="text" id="summary" name="summary" value="<%= product.summary %>" required maxlength="250">
+          </p>
+
+          <p>
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="7" required><%= product.description %></textarea>
+          </p>
+
+          <p>
+            <button type="reset" class="btn btn-alt">Reset</button>
+            <button class="btn">Save</button>
+          </p>
+        </form>
+      </main>
+  </body>
+
+  </html>

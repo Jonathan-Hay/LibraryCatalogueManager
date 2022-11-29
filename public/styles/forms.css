@@ -1,10 +1,10 @@
 form hr {
-  border-color: var(--color-primary-200);
+  border-color: var(--color-cherry-200);
   margin: var(--space-4);
 }
 
 label {
-  color: var(--color-gray-100);
+  color: var(--color-cherry-1);
   display: block;
   margin-bottom: var(--space-2);
 }

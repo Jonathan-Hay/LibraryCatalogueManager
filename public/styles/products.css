@@ -11,7 +11,7 @@
 .product-item {
   border-radius: var(--border-radius-medium);
   text-align: center;
-  background-color: var(--color-gray-600);
+  background-color: var(--color-pistachio-1);
   overflow: hidden;
 }
 
