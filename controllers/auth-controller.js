@@ -155,7 +155,6 @@ async function login(req, res, next) {
   //Therefore we want to "log them in" i.e, store info on the session to say this user can access certain
   //data
 
-  console.log("logged in");
 
   authUtil.createUserSession(req, existingUser, function () {
     res.redirect("/");

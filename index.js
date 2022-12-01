@@ -12,6 +12,8 @@ const checkAuthStatusMiddleware = require("./middlewares/check-auth");
 const authRoutes = require("./routes/auth.routes");
 const baseRoutes = require('./routes/base-routes');
 const adminRoutes = require("./routes/admin-routes");
+const ordersRoutes = require("./routes/orders.routes");
+
 
 
 
@@ -44,6 +46,7 @@ app.use(checkAuthStatusMiddleware);
 //use the routes defined in routes.js
 app.use(baseRoutes);
 app.use(authRoutes);
+app.use("/orders", ordersRoutes);
 
 app.use("/admin", adminRoutes);
 

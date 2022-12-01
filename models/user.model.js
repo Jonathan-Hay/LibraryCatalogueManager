@@ -13,6 +13,7 @@ class User {
   //return the user with the given id
   static findById(userId) {
     const uid = new mongodb.ObjectId(userId);
+    
 
     return db
       .getDb()

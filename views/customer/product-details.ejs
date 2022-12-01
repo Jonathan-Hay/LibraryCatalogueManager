@@ -1,21 +1,31 @@
 <%- include('../includes/head', { pageTitle: product.title }) %>
-<link rel="stylesheet" href="/styles/products.css">
-<!-- <script src="/scripts/cart-management.js" defer></script> -->
-</head>
-<body>
-  <%- include('../includes/header') %>
-  <main id="product-details">
-    <header>
-      <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-      <div id="product-info">
-        <h1><%= product.title %></h1>
-        <p>$<%= product.price %></p>
-        <button class="btn" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to Cart</button>
-      </div>
-    </header>
-    
-    <p id="product-description"><%= product.description %></p>
-  </main>
-</body>
+  <link rel="stylesheet" href="/styles/products.css">
+  <!-- <script src="/scripts/reserve-book.js" defer></script> -->
+  </head>
 
-</html>
+  <body>
+    <%- include('../includes/header') %>
+      <main id="product-details">
+        <header>
+          <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+          <div id="product-info">
+            <h1>
+              <%= product.title %>
+            </h1>
+            <p>$<%= product.price %>
+            </p>
+            <form action="/orders" method="POST">
+
+              <button class="btn" name = "title" value = "<%= product.title %>">Add to Cart</button>
+            </form>
+
+          </div>
+        </header>
+
+        <p id="product-description">
+          <%= product.description %>
+        </p>
+      </main>
+  </body>
+
+  </html>

@@ -20,8 +20,8 @@ router.post('/products/:id', imageUploadMiddleware, adminController.updateProduc
 // We will use a delete request because we dont want to use a form, we will use ajax
 router.delete('/products/:id', adminController.deleteProduct);
 
-// router.get('/orders', adminController.getOrders);
+router.get('/orders', adminController.getOrders);
 
-// router.patch('/orders/:id', adminController.updateOrder);
+router.patch('/orders/:id', adminController.updateOrder);
 
 module.exports = router;

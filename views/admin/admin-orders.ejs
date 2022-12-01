@@ -1,0 +1,21 @@
+<%- include('../includes/head', { pageTitle: 'All Orders' }) %>
+  <link rel="stylesheet" href="/styles/orders.css">
+  <script src="/scripts/order-management.js" defer></script>
+
+  </head>
+
+  <body>
+    <%- include('../includes/header') %>
+      <main>
+        <h1>All Your Orders</h1>
+        <ol>
+          <% for (const order of orders) { %>
+            <li>
+              <%- include('../includes/order-item', { order: order }) %>
+            </li>
+            <% } %>
+        </ol>
+      </main>
+  </body>
+
+  </html>

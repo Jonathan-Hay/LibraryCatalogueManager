@@ -4,7 +4,6 @@
     <ul class="nav-items">
       <% if (!locals.isAdmin) { %>
         <li><a href="/">Shop</a></li>
-        <li><a href="/cart">Cart <span class="badge">20</span></a></li>
       <% } %>
     
       <% if (locals.isAuth && !locals.isAdmin) { %>

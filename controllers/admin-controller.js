@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const Order = require('../models/order.model');
 
 function getNewProduct(req, res) {
   res.render("new-product");
@@ -9,7 +10,6 @@ async function createNewProduct(req, res) {
     image: req.file.filename
   });
 
-  console.log(req.body.title);
 
 
   try {
@@ -78,11 +78,42 @@ async function updateProduct(req, res, next) {
   res.redirect("/admin/products");
 }
 
+async function getOrders(req, res, next) {
+  try {
+    const orders = await Order.findAll();
+    res.render('admin/admin-orders', {
+      orders: orders
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function updateOrder(req, res, next) {
+  //id is the dynamic path paramter from the id in the url
+  const orderId = req.params.id;
+  const newStatus = req.body.newStatus;
+
+  try {
+    const order = await Order.findById(orderId);
+
+    order.status = newStatus;
+
+    await order.save();
+
+    res.json({ message: 'Order updated', newStatus: newStatus });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getNewProduct: getNewProduct,
   createNewProduct: createNewProduct,
   getProducts: getProducts,
   deleteProduct: deleteProduct,
   getUpdateProduct: getUpdateProduct,
-  updateProduct: updateProduct
+  updateProduct: updateProduct,
+  getOrders: getOrders,
+  updateOrder: updateOrder
   };
