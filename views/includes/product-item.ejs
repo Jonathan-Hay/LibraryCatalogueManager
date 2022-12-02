@@ -4,14 +4,20 @@
     <h2>
       <%= product.title %>
     </h2>
+
+    <h5>
+      <%= product.availability %>
+    </h5>
+
+    
     <div class="product-item-actions">
       <% if (locals.isAdmin) { %>
-        <a class="btn btn-alt" href="/admin/products/<%= product.id %>">View & Edit</a>
-        <button class="btn btn-alt" data-productid="<%= product.id %>">
+        <a class="btn" href="/admin/products/<%= product.id %>">View & Edit</a>
+        <button class="btn" data-productid="<%= product.id %>">
           Delete
         </button>
         <% } else { %>
-          <a class="btn btn-alt" href="/products/<%= product.id %>">View Details</a>
+          <a class="btn" href="/products/<%= product.id %>">View Details</a>
           <% } %>
     </div>
   </div>

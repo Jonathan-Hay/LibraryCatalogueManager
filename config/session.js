@@ -5,6 +5,8 @@ const mongoDbStore = require('connect-mongodb-session');
 function createSessionStore() {
   const MongoDBStore = mongoDbStore(expressSession);
 
+
+  //why shop?
   const store = new MongoDBStore({
     uri: 'mongodb://127.0.0.1:27017',
     databaseName: 'online-shop',

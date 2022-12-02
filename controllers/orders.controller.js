@@ -1,4 +1,5 @@
 const Order = require('../models/order.model');
+const Product = require('../models/product.model');
 const User = require('../models/user.model');
 
 
@@ -21,7 +22,16 @@ async function getOrders(req, res, next) {
 
 async function addOrder(req, res, next) {
 
-  const title = req.body.title;
+  const id = req.body.id;
+
+  let productDocument;
+  try {
+    productDocument = await Product.findById(id);
+  } catch (error) {
+    return next(error);
+  }
+
+  //if status === Unavailable - currently on Loan...dont go ahead
 
   //get the user with the given id
   let userDocument;
@@ -30,8 +40,9 @@ async function addOrder(req, res, next) {
   } catch (error) {
     return next(error);
   }
+
   
-  const order = new Order(title, userDocument);
+  const order = new Order(productDocument, userDocument);
   //save it to the db
   try {
     await order.save();
@@ -39,6 +50,8 @@ async function addOrder(req, res, next) {
     next(error);
     return;
   }
+
+  productDocument.updateAvailability("Unavailable - currently on Loan");
 
 
   res.redirect('/orders');

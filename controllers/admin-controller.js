@@ -7,7 +7,8 @@ function getNewProduct(req, res) {
 async function createNewProduct(req, res) {
   const product = new Product({
     ...req.body,
-    image: req.file.filename
+    image: req.file.filename,
+    availability: "Available for Loan"
   });
 
 

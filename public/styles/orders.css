@@ -22,10 +22,6 @@
   margin: 0;
 }
 
-.order-item-price {
-  color: var(--color-primary-500);
-}
-
 .order-item .status {
   display: flex;
   min-width: 15rem;

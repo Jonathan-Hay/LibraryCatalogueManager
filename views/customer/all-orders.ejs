@@ -1,11 +1,12 @@
-<%- include('../includes/head', { pageTitle: 'All Your Orders' }) %>
+<%- include('../includes/head', { pageTitle: 'Book Loans' }) %>
   <link rel="stylesheet" href="/styles/orders.css">
   </head>
 
   <body>
     <%- include('../includes/header') %>
       <main>
-        <h1>All Your Orders</h1>
+        <h1>Your book loans</h1>
+        <h2>Check this page to view the status of your book loans.</h2>
         <ol>
           <% for (const order of orders) { %>
             <li>

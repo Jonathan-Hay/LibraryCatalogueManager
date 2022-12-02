@@ -58,7 +58,7 @@
 }
 
 #product-description {
-  background-color: var(--color-primary-500-bg);
+  background-color: var(--color-pistachio-1);
   padding: var(--space-8);
   /* Gets rid of line breaks */
   white-space: pre-wrap;

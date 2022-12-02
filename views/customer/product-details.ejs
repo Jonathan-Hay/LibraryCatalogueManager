@@ -12,12 +12,18 @@
             <h1>
               <%= product.title %>
             </h1>
-            <p>$<%= product.price %>
+            <p><%= product.availability %>
             </p>
-            <form action="/orders" method="POST">
 
-              <button class="btn" name = "title" value = "<%= product.title %>">Add to Cart</button>
-            </form>
+            <% if (product.availability === 'Unavailable - currently on Loan') { %>
+              <h3>This book is currently on loan!</h3>
+              <% } else { %>
+                <form action="/orders" method="POST">
+                  <button class="btn" name = "id" value = "<%= product.id %>">Loan Book</button>
+                </form>
+
+            <% } %>
+
 
           </div>
         </header>

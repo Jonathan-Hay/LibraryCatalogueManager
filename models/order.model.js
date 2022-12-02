@@ -1,24 +1,24 @@
-const mongodb = require('mongodb');
+const mongodb = require("mongodb");
 
-const db = require('../data/database');
+const db = require("../data/database");
 
 class Order {
-  // To make an order, we need the cart, we need the user data for shipping etc, default status of order will be pending, 
+  // To make an order, we need the cart, we need the user data for shipping etc, default status of order will be pending,
   //and need an order id, date
   // Status => pending, fulfilled, cancelled
-  constructor(title, userData, status = 'pending', date, orderId) {
-    this.title = title;
+  constructor(product, userData, status = "pending", date, orderId) {
+    this.product = product;
     this.userData = userData;
     this.status = status;
-    //The data property wont exist initially, when the order is first created 
+    //The data property wont exist initially, when the order is first created
     this.date = new Date(date);
     // If the date exists, format it
     if (this.date) {
-      this.formattedDate = this.date.toLocaleDateString('en-US', {
-        weekday: 'short',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
+      this.formattedDate = this.date.toLocaleDateString("en-US", {
+        weekday: "short",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
       });
     }
     this.id = orderId;
@@ -26,7 +26,7 @@ class Order {
 
   static transformOrderDocument(orderDoc) {
     return new Order(
-      orderDoc.title,
+      orderDoc.product,
       orderDoc.userData,
       orderDoc.status,
       orderDoc.date,
@@ -41,7 +41,7 @@ class Order {
   static async findAll() {
     const orders = await db
       .getDb()
-      .collection('orders')
+      .collection("orders")
       .find()
       // sort by id in decending order, so latest orders are on top
       .sort({ _id: -1 })
@@ -56,8 +56,8 @@ class Order {
 
     const orders = await db
       .getDb()
-      .collection('orders')
-      .find({ 'userData._id': uid })
+      .collection("orders")
+      .find({ "userData._id": uid })
       .sort({ _id: -1 })
       .toArray();
 
@@ -67,33 +67,46 @@ class Order {
   static async findById(orderId) {
     const order = await db
       .getDb()
-      .collection('orders')
+      .collection("orders")
       .findOne({ _id: new mongodb.ObjectId(orderId) });
 
     return this.transformOrderDocument(order);
   }
 
-  // We can be updating an existing order, or creatingn a new order alltogethr 
-  save() {
+  // We can be updating an existing order, or creatingn a new order alltogethr
+  async save() {
     // if id exsists, we are updating
     if (this.id) {
       const orderId = new mongodb.ObjectId(this.id);
-      return db
+
+      await db
         .getDb()
-        .collection('orders')
+        .collection("orders")
         .updateOne({ _id: orderId }, { $set: { status: this.status } });
+      
+      const productId = new mongodb.ObjectId(this.product.id);
+      //if status is x, t, x
+
+      if (this.status === "Approved") {
+        await db.getDb().collection("products").updateOne({ _id: productId }, { $set: { availability: "Currently on Loan"} });
+      } else {
+        await db.getDb().collection("products").updateOne({ _id: productId }, { $set: { availability: "Available for Loan"} });
+      }
+
+
+
       // id not exist, new order
     } else {
-      // Create order document and put it into database 
+      // Create order document and put it into database
       const orderDocument = {
         userData: this.userData,
-        title: this.title,
+        product: this.product,
         // date doesnt exist yet so we crate it, using current time snapshot
         date: new Date(),
         status: this.status,
       };
 
-      return db.getDb().collection('orders').insertOne(orderDocument);
+      return db.getDb().collection("orders").insertOne(orderDocument);
     }
   }
 }
