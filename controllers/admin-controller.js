@@ -49,10 +49,10 @@ async function deleteProduct(req, res, next) {
 
 }
 
-async function getUpdateProduct(req, res, next) {
+async function getUpdateBookDetails(req, res, next) {
   try {
     const product = await Product.findById(req.params.id);
-    res.render("admin/update-product", { product: product });
+    res.render("admin/update-book-details", { product: product });
   } catch (error) {
     next(error);
   }
@@ -113,7 +113,7 @@ module.exports = {
   createNewProduct: createNewProduct,
   getProducts: getProducts,
   deleteProduct: deleteProduct,
-  getUpdateProduct: getUpdateProduct,
+  getUpdateBookDetails: getUpdateBookDetails,
   updateProduct: updateProduct,
   getOrders: getOrders,
   updateOrder: updateOrder

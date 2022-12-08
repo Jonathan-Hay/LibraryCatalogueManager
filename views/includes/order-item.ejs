@@ -1,7 +1,7 @@
 <article class="order-item">
   <header class="order-summary">
     <h2><%= order.product.title %> - <%= order.formattedDate %></h2>
-    <p><span class="badge"><%= order.status.toUpperCase() %></span></p>
+    <p><span class="status-badge"><%= order.status.toUpperCase() %></span></p>
   </header>
 
   <section class="order-details">
@@ -22,7 +22,7 @@
           <option value="Returned" <% if (order.status === 'Returned') { %>selected<% } %>>Return Book</option>
           <option value="Rejected" <% if (order.status === 'Rejected') { %>selected<% } %>>Reject Loan Request</option>
         </select>
-        <button class="btn btn-alt">Update</button>
+        <button class="btn">Update</button>
       </form>
     </section>
   <% } %>

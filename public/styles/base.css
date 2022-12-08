@@ -19,8 +19,6 @@ html {
 
   --border-radius-small: 4px;
   --border-radius-medium: 6px;
-
-  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -59,27 +57,15 @@ a {
   border-radius: var(--border-radius-small);
 }
 
-/* active kicks in when user clicks button */
-.btn:hover,
+/* active kicks in when user clicks button
 .btn:active {
-  background-color: var(---color-tangerine-1);
-  border-color: var(--color-tangerine-1);
-}
-
-.btn-alt {
-  background-color: transparent;
-  color: var(--color-tangerine-1);
-}
-
-.btn-alt:hover,
-.btn-alt:active {
-  background-color: var(--color-tangerine-1);
-}
+  border-color: red;
+} */
 
 .alert {
   border-radius: var(--border-radius-small);
   background-color: var(--color-tangerine-1);
-  color: var(--color-error-500);
+  color: var(--color-cherry-1);
   padding: var(--space-4);
 }
 
@@ -93,10 +79,10 @@ a {
   margin: var(--space-2) 0;
 }
 
-.badge {
+.status-badge {
   margin-left: var(--space-2);
   padding: 0.15rem var(--space-4);
   border-radius: 10rem;
-  background-color: var(--color-primary-500);
-  color: var(--color-primary-500-contrast);
+  background-color: var(--color-tangerine-1);
+  color: var(--color-cherry-1);
 }

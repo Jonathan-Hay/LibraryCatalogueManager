@@ -14,7 +14,7 @@ router.get('/products', adminController.getProducts);
 
 router.post('/products', imageUploadMiddleware, adminController.createNewProduct);
 
-router.get('/products/:id', adminController.getUpdateProduct);
+router.get('/products/:id', adminController.getUpdateBookDetails);
 
 router.post('/products/:id', imageUploadMiddleware, adminController.updateProduct);
 // We will use a delete request because we dont want to use a form, we will use ajax

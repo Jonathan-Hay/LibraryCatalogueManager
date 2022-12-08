@@ -110,16 +110,11 @@ main {
     display: block;
   }
 
-  /* .nav-items button {
-    color: var(--color-primary-500);
-    border-color: var(--color-primary-500);
-  } */
-
-  /* Hide mobil menu button on large screens */
+  /* Hide mobile menu button on large screens */
   #mobile-menu-btn {
     display: none;
   }
-  /* Hide mobil menu on large screens */
+  /* Hide mobile menu on large screens */
 
   #mobile-menu {
     display: none;
@@ -133,9 +128,4 @@ main {
     padding: var(--space-2) var(--space-4);
     border-radius: var(--border-radius-small);
   }
-
-  /* .nav-items a:hover,
-  .nav-items a:active {
-    background-color: var(--color-primary-1);
-  } */
 }

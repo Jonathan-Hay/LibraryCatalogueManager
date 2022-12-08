@@ -1,6 +1,6 @@
 
 .order-item {
-  background-color: var(--color-gray-400);
+  background-color: var(--color-pistachio-1);
   border-radius: var(--border-radius-small);
   padding: var(--space-4);
   margin: var(--space-4) 0;
@@ -27,7 +27,7 @@
   min-width: 15rem;
 }
 
-.order-item .status .badge {
+.order-item .status .status-badge {
   margin-right: var(--space-4);
 }
 
@@ -44,6 +44,7 @@
   font: inherit;
   padding: var(--space-2);
   border-radius: var(--border-radius-small);
+  
 }
 
 @media (min-width: 48rem) {

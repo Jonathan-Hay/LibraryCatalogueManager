@@ -44,8 +44,7 @@
   <nav>
     <ul class="nav-items">
       <% if (!locals.isAdmin) { %>
-        <li><a href="/">Shop</a></li>
-        <li><a href="/cart">Cart <span class="badge">20</span></a></li>
+        <li><a href="/">Catalogue</a></li>
       <% } %>
     
       <% if (locals.isAuth && !locals.isAdmin) { %>
@@ -53,7 +52,7 @@
       <% } %>
     
       <% if (locals.isAdmin) { %>
-        <li><a href="/admin/products">Manage Products</a></li>
+        <li><a href="/admin/products">Manage Catalogue</a></li>
         <li><a href="/admin/orders">Manage Orders</a></li>
       <% } %>
     
