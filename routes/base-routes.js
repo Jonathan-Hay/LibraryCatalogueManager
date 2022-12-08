@@ -1,6 +1,6 @@
 const express = require("express");
 const mongodb = require("mongodb");
-const Product = require('../models/product.model');
+const Book = require('../models/book.model');
 
 
 const db = require("../data/database");
@@ -15,8 +15,8 @@ router.get('/', function (req, res) {
 //tjese came from products.routes.js
 router.get('/products', async function (req, res, next) {
   try {
-    const products = await Product.findAll();
-    res.render("main-page", { products: products });
+    const books = await Book.findAll();
+    res.render("main-page", { books: books });
   } catch (error) {
     next(error);
   }
@@ -24,8 +24,8 @@ router.get('/products', async function (req, res, next) {
 
 router.get('/products/:id', async function (req, res, next) {
   try {
-    const product = await Product.findById(req.params.id);
-    res.render('customer/product-details', { product: product });
+    const book = await Book.findById(req.params.id);
+    res.render('customer/product-details', { book: book });
   } catch (error) {
     next(error);
   }

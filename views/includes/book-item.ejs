@@ -1,23 +1,23 @@
 <article class="product-item">
-  <img src="<%= product.imageUrl %>" alt="<%= product.title %>" />
+  <img src="<%= book.imageUrl %>" alt="<%= book.title %>" />
   <div class="product-item-content">
     <h2>
-      <%= product.title %>
+      <%= book.title %>
     </h2>
 
     <h5>
-      <%= product.availability %>
+      <%= book.availability %>
     </h5>
 
     
     <div class="product-item-actions">
       <% if (locals.isAdmin) { %>
-        <a class="btn" href="/admin/products/<%= product.id %>">View & Edit</a>
-        <button class="btn" data-productid="<%= product.id %>">
+        <a class="btn" href="/admin/products/<%= book.id %>">View & Edit</a>
+        <button class="btn" data-bookid="<%= book.id %>">
           Delete
         </button>
         <% } else { %>
-          <a class="btn" href="/products/<%= product.id %>">View Details</a>
+          <a class="btn" href="/products/<%= book.id %>">View Details</a>
           <% } %>
     </div>
   </div>

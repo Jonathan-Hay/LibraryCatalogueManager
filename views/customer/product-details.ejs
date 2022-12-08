@@ -1,4 +1,4 @@
-<%- include('../includes/head', { pageTitle: product.title }) %>
+<%- include('../includes/head', { pageTitle: book.title }) %>
   <link rel="stylesheet" href="/styles/products.css">
   </head>
 
@@ -6,19 +6,19 @@
     <%- include('../includes/header') %>
       <main id="product-details">
         <header>
-          <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+          <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
           <div id="product-info">
             <h1>
-              <%= product.title %>
+              <%= book.title %>
             </h1>
-            <p><%= product.availability %>
+            <p><%= book.availability %>
             </p>
 
-            <% if (product.availability === 'Unavailable - currently on Loan') { %>
+            <% if (book.availability === 'Unavailable - currently on Loan') { %>
               <h3>This book is currently on loan!</h3>
               <% } else { %>
                 <form action="/orders" method="POST">
-                  <button class="btn" name = "id" value = "<%= product.id %>">Loan Book</button>
+                  <button class="btn" name = "id" value = "<%= book.id %>">Loan Book</button>
                 </form>
 
             <% } %>
@@ -28,7 +28,7 @@
         </header>
 
         <p id="product-description">
-          <%= product.description %>
+          <%= book.description %>
         </p>
       </main>
   </body>

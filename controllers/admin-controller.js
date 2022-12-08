@@ -1,11 +1,11 @@
-const Product = require("../models/product.model");
+const Book = require("../models/book.model");
 const Order = require('../models/order.model');
 
-function getNewProduct(req, res) {
-  res.render("new-product");
+function getNewBook(req, res) {
+  res.render("new-book");
 }
-async function createNewProduct(req, res) {
-  const product = new Product({
+async function createNewBook(req, res) {
+  const book = new Book({
     ...req.body,
     image: req.file.filename,
     availability: "Available for Loan"
@@ -14,7 +14,7 @@ async function createNewProduct(req, res) {
 
 
   try {
-    await product.save();
+    await book.save();
   } catch (error) {
     next(error);
     return;
@@ -24,53 +24,53 @@ async function createNewProduct(req, res) {
 }
   
 
-async function getProducts(req, res, next) {
+async function getBooks(req, res, next) {
   try {
-    const products = await Product.findAll();
-    res.render("catalogue-admin", { products: products });
+    const books = await Book.findAll();
+    res.render("catalogue-admin", { books: books });
   } catch (error) {
     next(error);
     return;
   }
 }
 
-async function deleteProduct(req, res, next) {
-  let product;
+async function deleteBook(req, res, next) {
+  let book;
   try {
     //We are deleting an existing product with a given id
-    product = await Product.findById(req.params.id);
-    await product.remove();
+    book = await Book.findById(req.params.id);
+    await book.remove();
   } catch (error) {
     return next(error);
   }
 
   //we dont use redirect for ajax, we use json
-  res.json({ message: 'Deleted product!' });
+  res.json({ message: 'Deleted book!' });
 
 }
 
 async function getUpdateBookDetails(req, res, next) {
   try {
-    const product = await Product.findById(req.params.id);
-    res.render("admin/update-book-details", { product: product });
+    const book = await Book.findById(req.params.id);
+    res.render("admin/update-book-details", { book: book });
   } catch (error) {
     next(error);
   }
 }
 
-async function updateProduct(req, res, next) {
-  const product = new Product({
+async function updateBook(req, res, next) {
+  const book = new Book({
     ...req.body,
     _id: req.params.id,
   });
 
   //if we have a have a file in the request, replace the old image with the new one
   if (req.file) {
-    product.replaceImage(req.file.filename);
+    book.replaceImage(req.file.filename);
   }
 
   try {
-    await product.save();
+    await book.save();
   } catch (error) {
     next(error);
     return;
@@ -109,12 +109,12 @@ async function updateOrder(req, res, next) {
 }
 
 module.exports = {
-  getNewProduct: getNewProduct,
-  createNewProduct: createNewProduct,
-  getProducts: getProducts,
-  deleteProduct: deleteProduct,
+  getNewBook: getNewBook,
+  createNewBook: createNewBook,
+  getBooks: getBooks,
+  deleteBook: deleteBook,
   getUpdateBookDetails: getUpdateBookDetails,
-  updateProduct: updateProduct,
+  updateBook: updateBook,
   getOrders: getOrders,
   updateOrder: updateOrder
   };

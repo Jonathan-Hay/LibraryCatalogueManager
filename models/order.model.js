@@ -6,8 +6,8 @@ class Order {
   // To make an order, we need the cart, we need the user data for shipping etc, default status of order will be pending,
   //and need an order id, date
   // Status => pending, fulfilled, cancelled
-  constructor(product, userData, status = "pending", date, orderId) {
-    this.product = product;
+  constructor(book, userData, status = "pending", date, orderId) {
+    this.book = book;
     this.userData = userData;
     this.status = status;
     //The data property wont exist initially, when the order is first created
@@ -26,7 +26,7 @@ class Order {
 
   static transformOrderDocument(orderDoc) {
     return new Order(
-      orderDoc.product,
+      orderDoc.book,
       orderDoc.userData,
       orderDoc.status,
       orderDoc.date,
@@ -84,13 +84,13 @@ class Order {
         .collection("orders")
         .updateOne({ _id: orderId }, { $set: { status: this.status } });
       
-      const productId = new mongodb.ObjectId(this.product.id);
+      const bookId = new mongodb.ObjectId(this.book.id);
       //if status is x, t, x
 
       if (this.status === "Approved") {
-        await db.getDb().collection("products").updateOne({ _id: productId }, { $set: { availability: "Currently on Loan"} });
+        await db.getDb().collection("products").updateOne({ _id: bookId }, { $set: { availability: "Currently on Loan"} });
       } else {
-        await db.getDb().collection("products").updateOne({ _id: productId }, { $set: { availability: "Available for Loan"} });
+        await db.getDb().collection("products").updateOne({ _id: bookId }, { $set: { availability: "Available for Loan"} });
       }
 
 
@@ -100,7 +100,7 @@ class Order {
       // Create order document and put it into database
       const orderDocument = {
         userData: this.userData,
-        product: this.product,
+        book: this.book,
         // date doesnt exist yet so we crate it, using current time snapshot
         date: new Date(),
         status: this.status,

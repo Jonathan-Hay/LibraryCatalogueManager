@@ -1,4 +1,4 @@
-<%- include('./includes/head', {pageTitle: "All products" }) %>
+<%- include('./includes/head', {pageTitle: "All books" }) %>
 <link rel="stylesheet" href="/styles/products.css">
 <script src="/scripts/product-management.js" defer></script>
 
@@ -12,9 +12,9 @@
       <h1>Library Catalogue</h1>
       
       <ul id="products-grid">
-        <% for (const product of products) { %>
+        <% for (const book of books) { %>
           <li>
-            <%- include('includes/book-item', { product: product }) %>
+            <%- include('includes/book-item', { book: book }) %>
           </li>
         <% } %>
       </ul>

@@ -1,5 +1,5 @@
 const Order = require('../models/order.model');
-const Product = require('../models/product.model');
+const Book = require('../models/book.model');
 const User = require('../models/user.model');
 
 
@@ -24,9 +24,9 @@ async function addOrder(req, res, next) {
 
   const id = req.body.id;
 
-  let productDocument;
+  let bookDocument;
   try {
-    productDocument = await Product.findById(id);
+    bookDocument = await Book.findById(id);
   } catch (error) {
     return next(error);
   }
@@ -42,7 +42,7 @@ async function addOrder(req, res, next) {
   }
 
   
-  const order = new Order(productDocument, userDocument);
+  const order = new Order(bookDocument, userDocument);
   //save it to the db
   try {
     await order.save();
@@ -51,7 +51,7 @@ async function addOrder(req, res, next) {
     return;
   }
 
-  productDocument.updateAvailability("Unavailable - currently on Loan");
+  bookDocument.updateAvailability("Unavailable - currently on Loan");
 
 
   res.redirect('/orders');
