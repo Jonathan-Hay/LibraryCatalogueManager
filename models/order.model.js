@@ -3,16 +3,12 @@ const mongodb = require("mongodb");
 const db = require("../data/database");
 
 class Order {
-  // To make an order, we need the cart, we need the user data for shipping etc, default status of order will be pending,
-  //and need an order id, date
-  // Status => pending, fulfilled, cancelled
   constructor(book, userData, status = "pending", date, orderId) {
     this.book = book;
     this.userData = userData;
     this.status = status;
-    //The data property wont exist initially, when the order is first created
     this.date = new Date(date);
-    // If the date exists, format it
+
     if (this.date) {
       this.formattedDate = this.date.toLocaleDateString("en-US", {
         weekday: "short",
@@ -43,11 +39,9 @@ class Order {
       .getDb()
       .collection("orders")
       .find()
-      // sort by id in decending order, so latest orders are on top
       .sort({ _id: -1 })
       .toArray();
 
-    //transform them into instances of the order class
     return this.transformOrderDocuments(orders);
   }
 
@@ -73,9 +67,7 @@ class Order {
     return this.transformOrderDocument(order);
   }
 
-  // We can be updating an existing order, or creatingn a new order alltogethr
   async save() {
-    // if id exsists, we are updating
     if (this.id) {
       const orderId = new mongodb.ObjectId(this.id);
 
@@ -85,7 +77,6 @@ class Order {
         .updateOne({ _id: orderId }, { $set: { status: this.status } });
       
       const bookId = new mongodb.ObjectId(this.book.id);
-      //if status is x, t, x
 
       if (this.status === "Approved") {
         await db.getDb().collection("products").updateOne({ _id: bookId }, { $set: { availability: "Currently on Loan"} });
@@ -95,13 +86,10 @@ class Order {
 
 
 
-      // id not exist, new order
     } else {
-      // Create order document and put it into database
       const orderDocument = {
         userData: this.userData,
         book: this.book,
-        // date doesnt exist yet so we crate it, using current time snapshot
         date: new Date(),
         status: this.status,
       };

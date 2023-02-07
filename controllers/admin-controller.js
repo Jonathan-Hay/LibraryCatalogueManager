@@ -1,5 +1,5 @@
 const Book = require("../models/book.model");
-const Order = require('../models/order.model');
+const Order = require("../models/order.model");
 
 function getNewBook(req, res) {
   res.render("new-book");
@@ -8,10 +8,8 @@ async function createNewBook(req, res) {
   const book = new Book({
     ...req.body,
     image: req.file.filename,
-    availability: "Available for Loan"
+    availability: "Available for Loan",
   });
-
-
 
   try {
     await book.save();
@@ -22,7 +20,6 @@ async function createNewBook(req, res) {
 
   res.redirect("/");
 }
-  
 
 async function getBooks(req, res, next) {
   try {
@@ -37,16 +34,13 @@ async function getBooks(req, res, next) {
 async function deleteBook(req, res, next) {
   let book;
   try {
-    //We are deleting an existing product with a given id
     book = await Book.findById(req.params.id);
     await book.remove();
   } catch (error) {
     return next(error);
   }
 
-  //we dont use redirect for ajax, we use json
-  res.json({ message: 'Deleted book!' });
-
+  res.json({ message: "Deleted book!" });
 }
 
 async function getUpdateBookDetails(req, res, next) {
@@ -64,7 +58,6 @@ async function updateBook(req, res, next) {
     _id: req.params.id,
   });
 
-  //if we have a have a file in the request, replace the old image with the new one
   if (req.file) {
     book.replaceImage(req.file.filename);
   }
@@ -82,8 +75,8 @@ async function updateBook(req, res, next) {
 async function getOrders(req, res, next) {
   try {
     const orders = await Order.findAll();
-    res.render('admin/admin-orders', {
-      orders: orders
+    res.render("admin/admin-orders", {
+      orders: orders,
     });
   } catch (error) {
     next(error);
@@ -91,7 +84,6 @@ async function getOrders(req, res, next) {
 }
 
 async function updateOrder(req, res, next) {
-  //id is the dynamic path paramter from the id in the url
   const orderId = req.params.id;
   const newStatus = req.body.newStatus;
 
@@ -102,7 +94,7 @@ async function updateOrder(req, res, next) {
 
     await order.save();
 
-    res.json({ message: 'Order updated', newStatus: newStatus });
+    res.json({ message: "Order updated", newStatus: newStatus });
   } catch (error) {
     next(error);
   }
@@ -116,5 +108,5 @@ module.exports = {
   getUpdateBookDetails: getUpdateBookDetails,
   updateBook: updateBook,
   getOrders: getOrders,
-  updateOrder: updateOrder
-  };
+  updateOrder: updateOrder,
+};
